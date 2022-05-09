@@ -10,6 +10,7 @@ createCanvas(16);
 addDrawingCapability();
 
 
+
 function enableMouseDown() {
     isMouseDown = true;
 }
@@ -29,6 +30,13 @@ function createCanvas(dimension) {
             row.appendChild(tile);
         }
     }
+}
+
+function deleteCanvas() {
+    const canvasRows = document.querySelectorAll('.row');
+    canvasRows.forEach(row => {
+        row.remove();
+    });
 }
 
 function addDrawingCapability() {
