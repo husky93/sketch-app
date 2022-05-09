@@ -15,4 +15,5 @@
 
 .tile {
     flex: 1 auto;
+    cursor: crosshair;
 }
