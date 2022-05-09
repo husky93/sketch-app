@@ -1,0 +1,18 @@
+.canvas {
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: aquamarine;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex: 1 auto;
+}
+
+.tile {
+    flex: 1 auto;
+}
