@@ -1,16 +1,18 @@
 const canvas = document.querySelector('.canvas');
 const dimensionSelect = document.querySelector('select');
+const clearButton = document.querySelector('.btn-clear');
 let isMouseDown = false;
+
 canvas.addEventListener('mousedown', e => {
     e.preventDefault(); //prevent dragging
     enableMouseDown();
 });
 canvas.addEventListener('mouseup', disableMouseDown);
 dimensionSelect.addEventListener('change', changeCanvasSize);
+clearButton.addEventListener('click', clearCanvas);
 
 createCanvas(16);
 addDrawingCapability();
-
 
 
 function enableMouseDown() {
@@ -28,7 +30,7 @@ function createCanvas(dimension) {
         canvas.appendChild(row);
         for(let i = 0; i < dimension; i++) {
             const tile = document.createElement('div'); 
-            tile.classList.add('tile');
+            tile.classList.add('tile', 'border');
             row.appendChild(tile);
         }
     }
@@ -53,6 +55,11 @@ function addDrawingCapability() {
             tile.style.cssText = 'background-color: red;'
         })
     })
+}
+
+function clearCanvas() {
+    const tiles = document.querySelectorAll('.tile');
+    tiles.forEach(tile => tile.style.cssText = 'background-color: #fff;');
 }
 
 function changeCanvasSize(e) {
