@@ -1,6 +1,7 @@
 const canvas = document.querySelector('.canvas');
 const dimensionSelect = document.querySelector('select');
 const clearButton = document.querySelector('.btn-clear');
+const toggleGridButton = document.querySelector('.btn-grid');
 let isMouseDown = false;
 
 canvas.addEventListener('mousedown', e => {
@@ -10,6 +11,7 @@ canvas.addEventListener('mousedown', e => {
 canvas.addEventListener('mouseup', disableMouseDown);
 dimensionSelect.addEventListener('change', changeCanvasSize);
 clearButton.addEventListener('click', clearCanvas);
+toggleGridButton.addEventListener('click', toggleGrid);
 
 createCanvas(16);
 addDrawingCapability();
@@ -57,13 +59,18 @@ function addDrawingCapability() {
     })
 }
 
+function changeCanvasSize(e) {
+    deleteCanvas();
+    createCanvas(e.target.value);
+    addDrawingCapability();
+}
+
 function clearCanvas() {
     const tiles = document.querySelectorAll('.tile');
     tiles.forEach(tile => tile.style.cssText = 'background-color: #fff;');
 }
 
-function changeCanvasSize(e) {
-    deleteCanvas();
-    createCanvas(e.target.value);
-    addDrawingCapability();
+function toggleGrid() {
+    const tiles = document.querySelectorAll('.tile');
+    tiles.forEach(tile => tile.classList.toggle('border'));
 }
