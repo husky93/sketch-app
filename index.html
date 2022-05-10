@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&family=VT323&display=swap" rel="stylesheet">
     <title>Pixel Sketch</title>
 </head>
 <body>
@@ -15,12 +18,12 @@
         <div class="box">
             <div class="column left-column">
                 <div class="column container">
-                    <div>         
-                        <input type="color" name="pen" class="pencolor" value="#000000">
+                    <div class="colorpicker-wrapper">         
+                        <input type="color" name="pen" class="colorpicker pencolor" value="#000000">
                         <label for="pen">Pen color</label>
                     </div>
-                    <div>
-                        <input type="color" name="pen" class="bgcolor" value="#ffffff">
+                    <div class="colorpicker-wrapper">
+                        <input type="color" name="pen" class="colorpicker bgcolor" value="#ffffff">
                         <label for="pen">Background color</label>
                     </div>
                     <button class="btn btn-color">Grab color</button>
@@ -34,8 +37,8 @@
                         <option value="48">48x48</option>
                         <option value="64">64x64</option>
                     </select>
-                    <button class="btn btn-clear">Clear</button>
-                    <button class="btn btn-grid">Toggle grid</button>
+                    <button class="btn btn-clear click">Clear</button>
+                    <button class="btn btn-grid click">Toggle grid</button>
                     <span class="warning"></span>
                     </div>
                 </div>

@@ -4,6 +4,14 @@
 
 body {
     margin: 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 15px;
+    background-color: #F5F5F5;
+    color: #474747;
+}
+
+h1 {
+    margin: 0;
 }
 
 .canvas {
@@ -13,7 +21,13 @@ body {
     flex-direction: column;
     flex-wrap: wrap;
     background-color: #fff;
-    border: 10px solid #000;
+    border: 8px solid #597DB5;
+}
+
+.colorpicker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .row {
@@ -25,10 +39,6 @@ body {
 .tile {
     flex: 1 auto;
     cursor: crosshair;
-}
-
-.active {
-    background-color: aqua;
 }
 
 .border {
@@ -53,19 +63,84 @@ body {
 }
 
 .container {
-    gap: 10px;
+    gap: 12px;
 }
 
-select {
-    padding: 8px 0;
-    text-align: center;
-}
 
 .head {
     text-align: center;
-    padding: 32px;
+    padding: 48px;
+    font-family: 'VT323', monospace;
+    font-size: 36px;
+    color: #597DB5;
 }
 
 .btn {
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn , select{
     padding: 8px 0;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    border: 2px solid #597DB5;
+    color: #474747;
+    background-color: #FDFDFD;
+    min-width: 186px;
+}
+
+.click {
+    background-color: #597DB5;
+    color: #fff;
+}
+
+.click:hover {
+    background-color: #4C6B9C;
+    color: #fff;
+}
+
+.click:active {
+    background-color: #395075;
+    border: 2px solid #395075;
+}
+
+.active {
+    background-color: #597DB5;
+    color: #fff;
+}
+
+.warning {
+    font-size: 10px;
+    font-weight: 300;
+    color: #FF5842;
+}
+
+.colorpicker{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 38px;
+    height: 38px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background-color: #F5F5F5;
+}
+
+.colorpicker::-webkit-color-swatch {
+    padding: 2px;
+    border-radius: 100%;
+    border: none;
+    border: 2px solid #4C6B9C;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+}
+
+.colorpicker::-moz-color-swatch {
+    border-radius: 15px;
+    border: none;
+    border: 2px solid #4C6B9C;
 }

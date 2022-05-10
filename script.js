@@ -137,6 +137,7 @@ function grabColor(e) {
         });
         addDrawingCapability();
         e.target.classList.toggle('active');
+        warningText.textContent = '';
     }
     else {
         removeDrawingCapability();
@@ -184,5 +185,6 @@ function getTileColor(e) {
     tiles.forEach(tile => {
         tile.removeEventListener('click', getTileColor)
     });
+    warningText.textContent = '';
     addDrawingCapability();
 }
