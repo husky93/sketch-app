@@ -36,34 +36,36 @@ body {
     border-left: 1px solid rgba(68, 68, 68, 0.24);
 }
 
-.main {
-    display: flex;
-    gap: 48px;
-}
-
 .column {
     display: flex;
     flex-direction: column;
 }
 
-.left-column {
-    align-items: flex-end;
-    flex: 1 30%;
+.box {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
 }
 
-.right-column {
-    flex: 1 70%;
+.left-column {
+    align-items: flex-end;
+    padding: 0 32px;
 }
 
 .container {
     gap: 10px;
 }
 
-.btn {
-    padding: 8px 0;
-}
-
 select {
     padding: 8px 0;
     text-align: center;
+}
+
+.head {
+    text-align: center;
+    padding: 32px;
+}
+
+.btn {
+    padding: 8px 0;
 }

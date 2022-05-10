@@ -5,40 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
-    <title>Pixel-sketch</title>
+    <title>Pixel Sketch</title>
 </head>
 <body>
-    <section class="main">
-        <div class="column left-column">
-            <div class="column container">
-                <div>         
-                    <input type="color" name="pen" class="pencolor" value="#000000">
-                    <label for="pen">Pen color</label>
+    <section class="main column">
+        <header class="head">
+            <h1>Pixel Sketch</h1>
+        </header>
+        <div class="box">
+            <div class="column left-column">
+                <div class="column container">
+                    <div>         
+                        <input type="color" name="pen" class="pencolor" value="#000000">
+                        <label for="pen">Pen color</label>
+                    </div>
+                    <div>
+                        <input type="color" name="pen" class="bgcolor" value="#ffffff">
+                        <label for="pen">Background color</label>
+                    </div>
+                    <button class="btn btn-color">Grab color</button>
+                    <button class="btn btn-eraser">Toggle eraser</button>
+                    <label for="dimensions">Choose canvas size:</label>
+                    <select name="dimensions">
+                        <option value="16" selected="selected">16x16</option>
+                        <option value="24">24x24</option>
+                        <option value="32">32x32</option>
+                        <option value="40">40x40</option>
+                        <option value="48">48x48</option>
+                        <option value="64">64x64</option>
+                    </select>
+                    <button class="btn btn-clear">Clear</button>
+                    <button class="btn btn-grid">Toggle grid</button>
+                    <span class="warning"></span>
+                    </div>
                 </div>
-                <div>
-                    <input type="color" name="pen" class="bgcolor" value="#ffffff">
-                    <label for="pen">Background color</label>
+            <div class="right-column">
+                <div class="canvas">       
                 </div>
-                <button class="btn btn-color">Grab color</button>
-                <button class="btn btn-eraser">Toggle eraser</button>
-                <label for="dimensions">Choose canvas size:</label>
-                <select name="dimensions">
-                    <option value="16" selected="selected">16x16</option>
-                    <option value="24">24x24</option>
-                    <option value="32">32x32</option>
-                    <option value="40">40x40</option>
-                    <option value="48">48x48</option>
-                    <option value="64">64x64</option>
-                </select>
-                <button class="btn btn-clear">Clear</button>
-                <button class="btn btn-grid">Toggle grid</button>
-                <span class="warning"></span>
-                </div>
-            </div>
-        <div class="right-column">
-            <div class="canvas">       
             </div>
         </div>
+
     </section>
     <script src="./script.js"></script>
 </body>
