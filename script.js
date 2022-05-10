@@ -3,8 +3,10 @@ const dimensionSelect = document.querySelector('select');
 const clearButton = document.querySelector('.btn-clear');
 const toggleGridButton = document.querySelector('.btn-grid');
 const penColorPicker = document.querySelector('.pencolor');
+const bgColorPicker = document.querySelector('.bgcolor');
 let isMouseDown = false;
 let penColor = penColorPicker.value;
+let bgColor = bgColorPicker.value;
 
 canvas.addEventListener('mousedown', e => {
     e.preventDefault(); //prevent dragging
@@ -15,6 +17,7 @@ dimensionSelect.addEventListener('change', changeCanvasSize);
 clearButton.addEventListener('click', clearCanvas);
 toggleGridButton.addEventListener('click', toggleGrid);
 penColorPicker.addEventListener('change', changePenColor);
+bgColorPicker.addEventListener('change', changeBackgroundColor);
 
 createCanvas(16);
 addDrawingCapability();
@@ -36,6 +39,7 @@ function createCanvas(dimension) {
         for(let i = 0; i < dimension; i++) {
             const tile = document.createElement('div'); 
             tile.classList.add('tile', 'border');
+            tile.style.cssText = `background-color: ${bgColor};`
             row.appendChild(tile);
         }
     }
@@ -73,7 +77,7 @@ function changeCanvasSize(e) {
 function clearCanvas() {
     const tiles = document.querySelectorAll('.tile');
     tiles.forEach(tile => {
-        tile.style.cssText = 'background-color: #fff;'
+        tile.style.cssText = `background-color: ${bgColor}`
         if(tile.classList.contains('inked')) {
             tile.classList.remove('inked');
         }
@@ -87,4 +91,13 @@ function toggleGrid() {
 
 function changePenColor(e) {
     penColor = e.target.value;
+}
+
+function changeBackgroundColor(e) {
+    const tiles = document.querySelectorAll('.tile');
+    bgColor = e.target.value;
+    tiles.forEach(tile => {
+        if(!tile.classList.contains('inked')) tile.style.cssText = `background-color: ${bgColor};`
+        else return;
+    });
 }
