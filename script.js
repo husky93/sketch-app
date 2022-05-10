@@ -4,6 +4,7 @@ const clearButton = document.querySelector('.btn-clear');
 const toggleGridButton = document.querySelector('.btn-grid');
 const penColorPicker = document.querySelector('.pencolor');
 const bgColorPicker = document.querySelector('.bgcolor');
+const grabColorButton = document.querySelector('.btn-color');
 let isMouseDown = false;
 let penColor = penColorPicker.value;
 let bgColor = bgColorPicker.value;
@@ -18,6 +19,7 @@ clearButton.addEventListener('click', clearCanvas);
 toggleGridButton.addEventListener('click', toggleGrid);
 penColorPicker.addEventListener('change', changePenColor);
 bgColorPicker.addEventListener('change', changeBackgroundColor);
+grabColorButton.addEventListener('click', grabColor);
 
 createCanvas(16);
 addDrawingCapability();
@@ -45,19 +47,31 @@ function createCanvas(dimension) {
     }
 }
 
+function changeColorMO(e) {
+    if(isMouseDown) {
+        e.target.style.cssText = `background-color: ${penColor};`
+        e.target.classList.add('inked');
+    }
+}
+
+function changeColorClick(e) {
+    e.target.style.cssText = `background-color: ${penColor};`
+    e.target.classList.add('inked');
+}
+
 function addDrawingCapability() {
     const tiles = document.querySelectorAll('.tile');
     tiles.forEach(tile => {
-        tile.addEventListener('mouseover', e => {
-            if(isMouseDown) {
-                tile.style.cssText = `background-color: ${penColor};`
-                tile.classList.add('inked');
-            }
-        })
-        tile.addEventListener('click', e => {
-            tile.style.cssText = `background-color: ${penColor};`
-            tile.classList.add('inked');
-        })
+        tile.addEventListener('mouseover', changeColorMO)
+        tile.addEventListener('click', changeColorClick)
+    });
+}
+
+function removeDrawingCapability() {
+    const tiles = document.querySelectorAll('.tile');
+    tiles.forEach(tile => {
+        tile.removeEventListener('mouseover', changeColorMO)
+        tile.removeEventListener('click', changeColorClick)
     })
 }
 
@@ -100,4 +114,47 @@ function changeBackgroundColor(e) {
         if(!tile.classList.contains('inked')) tile.style.cssText = `background-color: ${bgColor};`
         else return;
     });
+}
+
+function rgbToHex(col)
+{
+    if(col.charAt(0)=='r')
+    {
+        col=col.replace('rgb(','').replace(')','').split(',');
+        let r=parseInt(col[0], 10).toString(16);
+        let g=parseInt(col[1], 10).toString(16);
+        let b=parseInt(col[2], 10).toString(16);
+        r=r.length==1?'0'+r:r; g=g.length==1?'0'+g:g; b=b.length==1?'0'+b:b;
+        let colHex='#'+r+g+b;
+        return colHex;
+    }
+}
+
+function getTileColor(e) {
+    const tiles = document.querySelectorAll('.tile');
+    penColorPicker.value = rgbToHex(e.target.style.backgroundColor);
+    penColor = rgbToHex(e.target.style.backgroundColor);
+    grabColorButton.classList.toggle('active'); 
+    tiles.forEach(tile => {
+        tile.removeEventListener('click', getTileColor)
+    });
+    addDrawingCapability();
+}
+
+function grabColor(e) {
+    const tiles = document.querySelectorAll('.tile');
+    if(e.target.classList.contains('active')) {
+        tiles.forEach(tile => {
+            tile.removeEventListener('click', getTileColor)
+        });
+        addDrawingCapability();
+        e.target.classList.toggle('active');
+    }
+    else {
+        removeDrawingCapability();
+        e.target.classList.toggle('active');
+        tiles.forEach(tile => {
+            tile.addEventListener('click', getTileColor)
+        });
+    }
 }

@@ -23,6 +23,10 @@
     cursor: crosshair;
 }
 
+.active {
+    background-color: aqua;
+}
+
 .border {
     border-top: 1px solid rgba(68, 68, 68, 0.24);
     border-left: 1px solid rgba(68, 68, 68, 0.24);
