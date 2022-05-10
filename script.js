@@ -1,10 +1,12 @@
 const canvas = document.querySelector('.canvas');
+const dimensionSelect = document.querySelector('select');
 let isMouseDown = false;
 canvas.addEventListener('mousedown', e => {
-    e.preventDefault();
+    e.preventDefault(); //prevent dragging
     enableMouseDown();
 });
 canvas.addEventListener('mouseup', disableMouseDown);
+dimensionSelect.addEventListener('change', changeCanvasSize);
 
 createCanvas(16);
 addDrawingCapability();
@@ -51,4 +53,10 @@ function addDrawingCapability() {
             tile.style.cssText = 'background-color: red;'
         })
     })
+}
+
+function changeCanvasSize(e) {
+    deleteCanvas();
+    createCanvas(e.target.value);
+    addDrawingCapability();
 }
