@@ -2,9 +2,13 @@
     box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+}
+
 .canvas {
-    width: 500px;
-    height: 500px;
+    width: 620px;
+    height: 620px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -30,4 +34,36 @@
 .border {
     border-top: 1px solid rgba(68, 68, 68, 0.24);
     border-left: 1px solid rgba(68, 68, 68, 0.24);
+}
+
+.main {
+    display: flex;
+    gap: 48px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.left-column {
+    align-items: flex-end;
+    flex: 1 30%;
+}
+
+.right-column {
+    flex: 1 70%;
+}
+
+.container {
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 0;
+}
+
+select {
+    padding: 8px 0;
+    text-align: center;
 }

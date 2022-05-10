@@ -62,6 +62,18 @@ function removeDrawingCapability() {
     })
 }
 
+function changeColorMO(e) {
+    if(isMouseDown) {
+        e.target.style.cssText = `background-color: ${penColor};`
+        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
+    }
+}
+
+function changeColorClick(e) {
+    e.target.style.cssText = `background-color: ${penColor};`
+    eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
+}
+
 function changeCanvasSize(e) {
     deleteCanvas();
     createCanvas(e.target.value);
@@ -162,18 +174,6 @@ function rgbToHex(col)
         let colHex='#'+r+g+b;
         return colHex;
     }
-}
-
-function changeColorMO(e) {
-    if(isMouseDown) {
-        e.target.style.cssText = `background-color: ${penColor};`
-        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
-    }
-}
-
-function changeColorClick(e) {
-    e.target.style.cssText = `background-color: ${penColor};`
-    eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
 }
 
 function getTileColor(e) {
