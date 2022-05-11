@@ -263,6 +263,7 @@ function loadFile(e) {
                     (imgWidth === 48 && imgHeight === 48) ||
                     (imgWidth === 64 && imgHeight === 64)) 
                 {
+                    dimensionSelect.value = imgWidth;
                     changeCanvasSize();
                     const ctx = imageBuffer.getContext('2d');
                     ctx.drawImage(img,0,0);
