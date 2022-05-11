@@ -5,9 +5,13 @@ const toggleEraserButton = document.querySelector('.btn-eraser');
 const toggleRainbowButton = document.querySelector('.btn-rainbow');
 const grabColorButton = document.querySelector('.btn-color');
 const clearButton = document.querySelector('.btn-clear');
+const loadFileInput = document.querySelector('.btn-load');
+const saveFileButton = document.querySelector('.btn-save');
 const penColorPicker = document.querySelector('.pencolor');
 const bgColorPicker = document.querySelector('.bgcolor');
 const warningText = document.querySelector('.warning');
+const fileWarningText = document.querySelector('.filewarning');
+const imageBuffer = document.querySelector('canvas');
 
 let isMouseDown = false;
 let eraserMode = false;
@@ -15,6 +19,7 @@ let rainbowMode = false;
 let penColor = penColorPicker.value;
 let bgColor = bgColorPicker.value;
 let eraserColor = bgColorPicker.value;
+const reader = new FileReader();
 
 canvas.addEventListener('mousedown', e => {
     e.preventDefault(); //prevent dragging
@@ -29,10 +34,14 @@ grabColorButton.addEventListener('click', grabColor);
 clearButton.addEventListener('click', clearCanvas);
 penColorPicker.addEventListener('change', changePenColor);
 bgColorPicker.addEventListener('change', changeBackgroundColor);
+loadFileInput.addEventListener('change', loadFile);
+saveFileButton.addEventListener('click', saveImage)
 
 
 createCanvas(16);
 addDrawingCapability();
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -90,10 +99,12 @@ function changeColorClick(e) {
     }
 }
 
-function changeCanvasSize(e) {
+function changeCanvasSize() {
     deleteCanvas();
-    createCanvas(e.target.value);
+    createCanvas(dimensionSelect.value);
     addDrawingCapability();
+    imageBuffer.width = dimensionSelect.value;
+    imageBuffer.height = dimensionSelect.value;
 }
 
 function clearCanvas() {
@@ -233,4 +244,37 @@ function getRandomColor() {
     const b = Math.floor(Math.random() * 255);
     const col = rgbToHex(`rgb(${r},${g},${b})`);
     return col;
+}
+
+function loadFile(e) {
+    const selectedFile = loadFileInput.files[0];
+    if(selectedFile){
+        reader.addEventListener('loadend', (e) => {
+            let img = new Image();
+            img.src = e.target.result;
+            img.onload = function() {
+                const imgWidth = img.width;
+                const imgHeight = img.height;
+                console.log(imgHeight);
+                console.log(imgWidth);
+                if((imgWidth === 16 && imgHeight === 16) || 
+                    (imgWidth === 24 && imgHeight === 24) ||
+                    (imgWidth === 32 && imgHeight === 32) ||
+                    (imgWidth === 48 && imgHeight === 48) ||
+                    (imgWidth === 64 && imgHeight === 64)) 
+                {
+                    changeCanvasSize();
+                    const ctx = imageBuffer.getContext('2d');
+                    ctx.drawImage(img,0,0);
+                } else {
+                    fileWarningText.textContent = 'Wrong file dimensions!'
+                }
+            }
+        });
+        reader.readAsDataURL(selectedFile);
+    }
+}
+
+function saveImage() {
+    
 }

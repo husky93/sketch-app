@@ -49,7 +49,10 @@
             <div class="column right-column">
                 <div class="column container">
                     <strong>Only supporting .png files</strong>
-                    <button class="btn btn-load click">Load file</button>
+                    <span>(Only 16x16, 24x24, 32x32, 48x48, 64x64 px)</span>
+                    <input type="file" class="btn btn-load" accept="image/png, image/jpeg">
+                    <span class="filewarning"></span>
+                    <canvas height="16" width="16" class="imagebuffer"></canvas>
                     <button class="btn btn-save click">Save file</button>
                 </div>
             </div>
