@@ -35,7 +35,7 @@ clearButton.addEventListener('click', clearCanvas);
 penColorPicker.addEventListener('change', changePenColor);
 bgColorPicker.addEventListener('change', changeBackgroundColor);
 loadFileInput.addEventListener('change', loadFile);
-saveFileButton.addEventListener('click', saveImage)
+saveFileButton.addEventListener('click', copyImageToCanvas)
 
 
 createCanvas(16);
@@ -249,7 +249,7 @@ function getRandomColor() {
 function loadFile(e) {
     const selectedFile = loadFileInput.files[0];
     if(selectedFile){
-        reader.addEventListener('loadend', (e) => {
+        reader.addEventListener('load', (e) => {
             let img = new Image();
             img.src = e.target.result;
             img.onload = function() {
@@ -274,6 +274,25 @@ function loadFile(e) {
         });
         reader.readAsDataURL(selectedFile);
     }
+}
+
+function copyImageToCanvas() {
+    const tiles = document.querySelectorAll('.tile');
+    const ctx = imageBuffer.getContext('2d');
+    const dimension = dimensionSelect.value;
+    let data = new Array();
+    for(let i = 0; i < dimension; i++) {
+        data[i] = new Array();
+        for(let j = 0; j < dimension; j++) {
+            const pixel = ctx.getImageData(i, j, 1 ,1);
+            data[i][j] = pixel.data;
+            const rgba = `rgba(${data[i][j][0]}, ${data[i][j][1]}, ${data[i][j][2]}, ${data[i][j][3] / 255})`;
+            console.log(rgba);
+        }
+    }
+    tiles.forEach(tile => {
+        
+    });
 }
 
 function saveImage() {
