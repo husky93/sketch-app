@@ -63,10 +63,10 @@ h1 {
     gap: 48px;
 }
 
-.left-column {
-    align-items: flex-end;
+.left-column,.right-column {
     padding: 0 32px;
 }
+
 
 .container {
     gap: 12px;
