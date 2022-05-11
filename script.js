@@ -1,5 +1,6 @@
 const canvas = document.querySelector('.canvas');
 const dimensionSelect = document.querySelector('select');
+const opacityInput = document.querySelector('.opacity');
 const toggleGridButton = document.querySelector('.btn-grid');
 const toggleEraserButton = document.querySelector('.btn-eraser');
 const toggleRainbowButton = document.querySelector('.btn-rainbow');
@@ -11,6 +12,7 @@ const penColorPicker = document.querySelector('.pencolor');
 const bgColorPicker = document.querySelector('.bgcolor');
 const warningText = document.querySelector('.warning');
 const fileWarningText = document.querySelector('.filewarning');
+const opacityValue = document.querySelector('.opacity-value');
 const imageBuffer = document.querySelector('canvas');
 
 let isMouseDown = false;
@@ -19,6 +21,7 @@ let rainbowMode = false;
 let penColor = penColorPicker.value;
 let bgColor = bgColorPicker.value;
 let eraserColor = bgColorPicker.value;
+let penOpacity = opacityInput.value;
 const reader = new FileReader();
 
 canvas.addEventListener('mousedown', e => {
@@ -35,8 +38,10 @@ clearButton.addEventListener('click', clearCanvas);
 penColorPicker.addEventListener('change', changePenColor);
 bgColorPicker.addEventListener('change', changeBackgroundColor);
 loadFileInput.addEventListener('change', loadFile);
-saveFileButton.addEventListener('click', copyImageToCanvas)
+saveFileButton.addEventListener('click', saveFile);
+opacityInput.addEventListener('change', changeOpacity);
 
+opacityValue.textContent = opacityInput.value;
 
 createCanvas(16);
 addDrawingCapability();
@@ -77,7 +82,8 @@ function removeDrawingCapability() {
 
 function changeColorMO(e) {
     if(isMouseDown && !rainbowMode) {
-        e.target.style.cssText = `background-color: ${penColor};`
+        let color = hexToRGB(penColor, penOpacity);
+        e.target.style.cssText = `background-color: ${color};`
         eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
     } else if (isMouseDown && rainbowMode) {
         const col = getRandomColor();
@@ -90,7 +96,8 @@ function changeColorMO(e) {
 
 function changeColorClick(e) {
     if(!rainbowMode) {
-        e.target.style.cssText = `background-color: ${penColor};`
+        let color = hexToRGB(penColor, penOpacity);
+        e.target.style.cssText = `background-color: ${color};`
         eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
     } else if (rainbowMode) {
         const col = getRandomColor();
@@ -172,6 +179,11 @@ function changeBackgroundColor(e) {
     });
 }
 
+function changeOpacity() {
+    penOpacity = opacityInput.value;
+    opacityValue.textContent = opacityInput.value;
+}
+
 function grabColor(e) {
     if(eraserMode) {
         toggleEraser();
@@ -214,7 +226,7 @@ function deleteCanvas() {
 
 function rgbToHex(col)
 {
-    if(col.charAt(0)=='r')
+    if(col.charAt(3)=='(')
     {
         col=col.replace('rgb(','').replace(')','').split(',');
         let r=parseInt(col[0], 10).toString(16);
@@ -223,6 +235,37 @@ function rgbToHex(col)
         r=r.length==1?'0'+r:r; g=g.length==1?'0'+g:g; b=b.length==1?'0'+b:b;
         let colHex='#'+r+g+b;
         return colHex;
+    } else if (col.charAt(3)=='a') {
+        let a, isPercent,
+        rgb = col.replace(/\s/g, '').match(/^rgba?\((\d+),(\d+),(\d+),?([^,\s)]+)?/i),
+        alpha = (rgb && rgb[4] || "").trim(),
+        hex = rgb ?
+        (rgb[1] | 1 << 8).toString(16).slice(1) +
+        (rgb[2] | 1 << 8).toString(16).slice(1) +
+        (rgb[3] | 1 << 8).toString(16).slice(1) : col;
+    
+      if (alpha !== "") {
+        a = alpha;
+      } else {
+        a = 01;
+      }
+      // multiply before convert to HEX
+      a = ((a * 255) | 1 << 8).toString(16).slice(1)
+      hex = hex + a;
+    
+      return '#' + hex;
+    }
+}
+
+function hexToRGB(hex, alpha) {
+    var r = parseInt(hex.slice(1, 3), 16),
+        g = parseInt(hex.slice(3, 5), 16),
+        b = parseInt(hex.slice(5, 7), 16);
+
+    if (alpha) {
+        return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+    } else {
+        return "rgb(" + r + ", " + g + ", " + b + ")";
     }
 }
 
@@ -267,6 +310,7 @@ function loadFile(e) {
                     changeCanvasSize();
                     const ctx = imageBuffer.getContext('2d');
                     ctx.drawImage(img,0,0);
+                    copyImageToCanvas();
                 } else {
                     fileWarningText.textContent = 'Wrong file dimensions!'
                 }
@@ -280,21 +324,24 @@ function copyImageToCanvas() {
     const tiles = document.querySelectorAll('.tile');
     const ctx = imageBuffer.getContext('2d');
     const dimension = dimensionSelect.value;
-    let data = new Array();
+    let data = [];
+    let counter = 0;
     for(let i = 0; i < dimension; i++) {
-        data[i] = new Array();
         for(let j = 0; j < dimension; j++) {
-            const pixel = ctx.getImageData(i, j, 1 ,1);
-            data[i][j] = pixel.data;
-            const rgba = `rgba(${data[i][j][0]}, ${data[i][j][1]}, ${data[i][j][2]}, ${data[i][j][3] / 255})`;
-            console.log(rgba);
+            const pixel = ctx.getImageData(j, i, 1 ,1);
+            data[counter] = pixel.data;
+            counter++;
         }
     }
+    let i = 0;
     tiles.forEach(tile => {
-        
+        const rgba = `rgba(${data[i][0]}, ${data[i][1]}, ${data[i][2]}, ${data[i][3] / 255})`;  
+        const color = rgbToHex(rgba);
+        tile.style.cssText = `background-color: ${color};`;
+        i++;
     });
 }
 
-function saveImage() {
+function saveFile() {
     
 }
