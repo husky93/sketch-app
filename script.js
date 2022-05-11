@@ -10,7 +10,7 @@ const loadFileInput = document.querySelector('.btn-load');
 const saveFileButton = document.querySelector('.btn-save');
 const penColorPicker = document.querySelector('.pencolor');
 const bgColorPicker = document.querySelector('.bgcolor');
-const warningText = document.querySelector('.warning');
+const warningText = document.querySelector('.btnwarning');
 const fileWarningText = document.querySelector('.filewarning');
 const opacityValue = document.querySelector('.opacity-value');
 const imageBuffer = document.querySelector('canvas');
@@ -80,39 +80,6 @@ function removeDrawingCapability() {
     })
 }
 
-function changeColorMO(e) {
-    if(isMouseDown && !rainbowMode) {
-        console.log(penColor);
-        let color = hexToRGB(penColor, penOpacity);
-        e.target.style.cssText = `background-color: ${color};`
-        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
-    } else if (isMouseDown && rainbowMode) {
-        const col = getRandomColor();
-        e.target.style.cssText = `background-color: ${col};`
-        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
-    }
-
-}
-
-function changeColorClick(e) {
-    if(!rainbowMode) {
-        let color = hexToRGB(penColor, penOpacity);
-        e.target.style.cssText = `background-color: ${color};`
-        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
-    } else if (rainbowMode) {
-        const col = getRandomColor();
-        e.target.style.cssText = `background-color: ${col};`
-        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
-    }
-}
-
-function changeCanvasSize() {
-    deleteCanvas();
-    createCanvas(dimensionSelect.value);
-    addDrawingCapability();
-    imageBuffer.width = dimensionSelect.value;
-    imageBuffer.height = dimensionSelect.value;
-}
 
 function clearCanvas() {
     const tiles = document.querySelectorAll('.tile');
@@ -163,8 +130,48 @@ function toggleRainbow() {
     }
 }
 
+function changeColorMO(e) {
+    if(isMouseDown && !rainbowMode) {
+        console.log(penColor);
+        let color = hexToRGB(penColor, penOpacity);
+        e.target.style.cssText = `background-color: ${color};`
+        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
+    } else if (isMouseDown && rainbowMode) {
+        const col = getRandomColor();
+        e.target.style.cssText = `background-color: ${col};`
+        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
+    }
+
+}
+
+function changeColorClick(e) {
+    if(!rainbowMode) {
+        let color = hexToRGB(penColor, penOpacity);
+        e.target.style.cssText = `background-color: ${color};`
+        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
+    } else if (rainbowMode) {
+        const col = getRandomColor();
+        e.target.style.cssText = `background-color: ${col};`
+        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
+    }
+}
+
+function changeCanvasSize() {
+    deleteCanvas();
+    createCanvas(dimensionSelect.value);
+    addDrawingCapability();
+    imageBuffer.width = dimensionSelect.value;  //Change our image buffer (html canvas) size needed for image loading/saving
+    imageBuffer.height = dimensionSelect.value;
+    loadFileInput.value = null;
+}
+
 function changePenColor(e) {
     eraserMode ? eraserColor = e.target.value : penColor = e.target.value;
+}
+
+function changeOpacity(value) {
+    penOpacity = value;
+    opacityValue.textContent = value;
 }
 
 function changeBackgroundColor(e) {
@@ -178,11 +185,6 @@ function changeBackgroundColor(e) {
         if(!tile.classList.contains('inked')) tile.style.cssText = `background-color: ${bgColor};`
         else return;
     });
-}
-
-function changeOpacity(value) {
-    penOpacity = value;
-    opacityValue.textContent = value;
 }
 
 function grabColor(e) {
@@ -307,15 +309,14 @@ function getRandomColor() {
 function loadFile(e) {
     reader = new FileReader();
     const selectedFile = loadFileInput.files[0];
-    if(selectedFile){
+    fileWarningText.textContent = '';
+    if(selectedFile) {
         reader.addEventListener('load', (e) => {
             let img = new Image();
             img.src = e.target.result;
             img.onload = function() {
                 const imgWidth = img.width;
                 const imgHeight = img.height;
-                console.log(imgHeight);
-                console.log(imgWidth);
                 if((imgWidth === 16 && imgHeight === 16) || 
                     (imgWidth === 24 && imgHeight === 24) ||
                     (imgWidth === 32 && imgHeight === 32) ||

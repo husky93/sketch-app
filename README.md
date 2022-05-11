@@ -14,4 +14,4 @@ Web app in which you can create pixelated art.
 
 Live: [click here](https://husky93.github.io/sketch-app/)
 
-![alt text](https://github.com/husky93/sketch-app/blob/main/assets/bulbasaur.jpg?raw=true)
+![alt text](https://github.com/husky93/sketch-app/blob/main/assets/charizard.png?raw=true)
