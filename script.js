@@ -22,7 +22,7 @@ let penColor = penColorPicker.value;
 let bgColor = bgColorPicker.value;
 let eraserColor = bgColorPicker.value;
 let penOpacity = opacityInput.value;
-const reader = new FileReader();
+let reader = null;
 
 canvas.addEventListener('mousedown', e => {
     e.preventDefault(); //prevent dragging
@@ -39,7 +39,7 @@ penColorPicker.addEventListener('change', changePenColor);
 bgColorPicker.addEventListener('change', changeBackgroundColor);
 loadFileInput.addEventListener('change', loadFile);
 saveFileButton.addEventListener('click', saveFile);
-opacityInput.addEventListener('change', changeOpacity);
+opacityInput.addEventListener('change', e => changeOpacity(e.target.value));
 
 opacityValue.textContent = opacityInput.value;
 
@@ -82,6 +82,7 @@ function removeDrawingCapability() {
 
 function changeColorMO(e) {
     if(isMouseDown && !rainbowMode) {
+        console.log(penColor);
         let color = hexToRGB(penColor, penOpacity);
         e.target.style.cssText = `background-color: ${color};`
         eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
@@ -92,7 +93,6 @@ function changeColorMO(e) {
     }
 
 }
-
 
 function changeColorClick(e) {
     if(!rainbowMode) {
@@ -121,7 +121,8 @@ function clearCanvas() {
         if(tile.classList.contains('inked')) {
             tile.classList.remove('inked');
         }
-    });
+    }); 
+    loadFileInput.value = null;
 }
 
 function toggleGrid() {
@@ -179,9 +180,9 @@ function changeBackgroundColor(e) {
     });
 }
 
-function changeOpacity() {
-    penOpacity = opacityInput.value;
-    opacityValue.textContent = opacityInput.value;
+function changeOpacity(value) {
+    penOpacity = value;
+    opacityValue.textContent = value;
 }
 
 function grabColor(e) {
@@ -235,7 +236,7 @@ function rgbToHex(col)
         r=r.length==1?'0'+r:r; g=g.length==1?'0'+g:g; b=b.length==1?'0'+b:b;
         let colHex='#'+r+g+b;
         return colHex;
-    } else if (col.charAt(3)=='a') {
+    } if (col.charAt(3)=='a') {
         let a, isPercent,
         rgb = col.replace(/\s/g, '').match(/^rgba?\((\d+),(\d+),(\d+),?([^,\s)]+)?/i),
         alpha = (rgb && rgb[4] || "").trim(),
@@ -257,6 +258,17 @@ function rgbToHex(col)
     }
 }
 
+function getAlphaRGBA(col) {
+    if(col.charAt(3)=='(') {
+        return 1;
+    }
+    else if (col.charAt(3)=='a') {
+        let rgb = col.replace(/\s/g, '').match(/^rgba?\((\d+),(\d+),(\d+),?([^,\s)]+)?/i)
+        let alpha = (rgb && rgb[4] || "").trim()    
+      return alpha;
+    }
+}
+
 function hexToRGB(hex, alpha) {
     var r = parseInt(hex.slice(1, 3), 16),
         g = parseInt(hex.slice(3, 5), 16),
@@ -273,6 +285,8 @@ function getTileColor(e) {
     const tiles = document.querySelectorAll('.tile');
     penColorPicker.value = rgbToHex(e.target.style.backgroundColor);
     penColor = rgbToHex(e.target.style.backgroundColor);
+    penOpacity = getAlphaRGBA(e.target.style.backgroundColor);
+    changeOpacity(penOpacity);
     grabColorButton.classList.toggle('active'); 
     tiles.forEach(tile => {
         tile.removeEventListener('click', getTileColor)
@@ -290,6 +304,7 @@ function getRandomColor() {
 }
 
 function loadFile(e) {
+    reader = new FileReader();
     const selectedFile = loadFileInput.files[0];
     if(selectedFile){
         reader.addEventListener('load', (e) => {
@@ -338,6 +353,9 @@ function copyImageToCanvas() {
         const rgba = `rgba(${data[i][0]}, ${data[i][1]}, ${data[i][2]}, ${data[i][3] / 255})`;  
         const color = rgbToHex(rgba);
         tile.style.cssText = `background-color: ${color};`;
+        if(data[i][3] > 0) {
+            tile.classList.add('inked')
+        }
         i++;
     });
 }
