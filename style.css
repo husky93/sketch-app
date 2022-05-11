@@ -174,3 +174,15 @@ strong {
     display: block;
     background-image: url(./assets/GitHub-Mark-32px.png);
 }
+
+canvas {
+    display: none;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.btn-upload {
+    text-align: center;
+}

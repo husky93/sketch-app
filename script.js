@@ -287,6 +287,7 @@ function getTileColor(e) {
     penColor = rgbToHex(e.target.style.backgroundColor);
     penOpacity = getAlphaRGBA(e.target.style.backgroundColor);
     changeOpacity(penOpacity);
+    opacityInput.value = penOpacity;
     grabColorButton.classList.toggle('active'); 
     tiles.forEach(tile => {
         tile.removeEventListener('click', getTileColor)
