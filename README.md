@@ -6,6 +6,7 @@ Web app in which you can create pixelated art.
 - Switch canvas pixel size
 - Change background color
 - Pick color from canvas
+- Rainbow mode - each drawn pixel gets random color
 - Eraser
 - Clear canvas button
 - Toggle pixel grid

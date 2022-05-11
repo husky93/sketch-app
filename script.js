@@ -1,15 +1,17 @@
 const canvas = document.querySelector('.canvas');
 const dimensionSelect = document.querySelector('select');
-const clearButton = document.querySelector('.btn-clear');
 const toggleGridButton = document.querySelector('.btn-grid');
 const toggleEraserButton = document.querySelector('.btn-eraser');
+const toggleRainbowButton = document.querySelector('.btn-rainbow');
+const grabColorButton = document.querySelector('.btn-color');
+const clearButton = document.querySelector('.btn-clear');
 const penColorPicker = document.querySelector('.pencolor');
 const bgColorPicker = document.querySelector('.bgcolor');
-const grabColorButton = document.querySelector('.btn-color');
 const warningText = document.querySelector('.warning');
 
 let isMouseDown = false;
 let eraserMode = false;
+let rainbowMode = false;
 let penColor = penColorPicker.value;
 let bgColor = bgColorPicker.value;
 let eraserColor = bgColorPicker.value;
@@ -20,12 +22,14 @@ canvas.addEventListener('mousedown', e => {
 });
 canvas.addEventListener('mouseup', disableMouseDown);
 dimensionSelect.addEventListener('change', changeCanvasSize);
-clearButton.addEventListener('click', clearCanvas);
 toggleGridButton.addEventListener('click', toggleGrid);
 toggleEraserButton.addEventListener('click', toggleEraser);
+toggleRainbowButton.addEventListener('click', toggleRainbow);
+grabColorButton.addEventListener('click', grabColor);
+clearButton.addEventListener('click', clearCanvas);
 penColorPicker.addEventListener('change', changePenColor);
 bgColorPicker.addEventListener('change', changeBackgroundColor);
-grabColorButton.addEventListener('click', grabColor);
+
 
 createCanvas(16);
 addDrawingCapability();
@@ -63,15 +67,27 @@ function removeDrawingCapability() {
 }
 
 function changeColorMO(e) {
-    if(isMouseDown) {
+    if(isMouseDown && !rainbowMode) {
         e.target.style.cssText = `background-color: ${penColor};`
         eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
+    } else if (isMouseDown && rainbowMode) {
+        const col = getRandomColor();
+        e.target.style.cssText = `background-color: ${col};`
+        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
     }
+
 }
 
+
 function changeColorClick(e) {
-    e.target.style.cssText = `background-color: ${penColor};`
-    eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
+    if(!rainbowMode) {
+        e.target.style.cssText = `background-color: ${penColor};`
+        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
+    } else if (rainbowMode) {
+        const col = getRandomColor();
+        e.target.style.cssText = `background-color: ${col};`
+        eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
+    }
 }
 
 function changeCanvasSize(e) {
@@ -95,17 +111,36 @@ function toggleGrid() {
     tiles.forEach(tile => tile.classList.toggle('border'));
 }
 
-function toggleEraser(e) {
+function toggleEraser() {
     let temp = '';
+    if(rainbowMode) {
+        toggleRainbow();
+    }
     if(!grabColorButton.classList.contains('active')) {
         toggleEraserButton.classList.toggle('active');
         temp = eraserColor;
         eraserColor = penColor;
         penColor = temp;
         eraserMode = !eraserMode;
-        warningText.textContent = '';
     } else {
         warningText.textContent = 'Choose a color before toggling eraser!';
+    }
+}
+
+function toggleRainbow() {
+    if(eraserMode) {
+        toggleEraser();
+    }
+    if(grabColorButton.classList.contains('active')) {
+        warningText.textContent = 'Choose a color before toggling rainbow mode!';
+        return;
+    }
+    if(!toggleRainbowButton.classList.contains('active')) {
+        toggleRainbowButton.classList.toggle('active');
+        rainbowMode = true;
+    } else {
+        toggleRainbowButton.classList.toggle('active');
+        rainbowMode = false;
     }
 }
 
@@ -129,6 +164,9 @@ function changeBackgroundColor(e) {
 function grabColor(e) {
     if(eraserMode) {
         toggleEraser();
+    }
+    if(rainbowMode) {
+        toggleRainbow();
     }
     const tiles = document.querySelectorAll('.tile');
     if(e.target.classList.contains('active')) {
@@ -187,4 +225,12 @@ function getTileColor(e) {
     });
     warningText.textContent = '';
     addDrawingCapability();
+}
+
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 255);
+    const g = Math.floor(Math.random() * 255);
+    const b = Math.floor(Math.random() * 255);
+    const col = rgbToHex(`rgb(${r},${g},${b})`);
+    return col;
 }
