@@ -1,5 +1,6 @@
 # Pixel Sketch
-Web app in which you can create pixelated art.
+Web application in which you can create pixelated art. Perfect for creating your own icons!
+Written in vanilla JavaScript.
 
 #### Features:
 - Change brush color
@@ -16,4 +17,4 @@ Web app in which you can create pixelated art.
 
 Live: [click here](https://husky93.github.io/sketch-app/)
 
-![alt text](https://github.com/husky93/sketch-app/blob/main/assets/charizard.png?raw=true)
+![Webpage photo](https://github.com/husky93/sketch-app/blob/main/assets/charizard.png?raw=true)
