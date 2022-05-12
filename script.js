@@ -132,7 +132,6 @@ function toggleRainbow() {
 
 function changeColorMO(e) {
     if(isMouseDown && !rainbowMode) {
-        console.log(penColor);
         let color = hexToRGB(penColor, penOpacity);
         e.target.style.cssText = `background-color: ${color};`
         eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
@@ -306,7 +305,7 @@ function getRandomColor() {
     return col;
 }
 
-function loadFile(e) {
+function loadFile() {
     reader = new FileReader();
     const selectedFile = loadFileInput.files[0];
     fileWarningText.textContent = '';
@@ -335,6 +334,25 @@ function loadFile(e) {
         });
         reader.readAsDataURL(selectedFile);
     }
+}
+
+function saveFile() {
+    copyCanvasToBuffer();
+    const dimension = dimensionSelect.value;
+
+    // IE Support
+    if(window.navigator.msSaveBlob) {
+        window.navigator.msSaveBlob(imageBuffer.msToBlob(), `pixel-img-${dimension}x${dimension}.png`);
+    } else {
+        const a = document.createElement('a');
+
+        document.body.appendChild(a);  // Need to append and remove so it works on Firefox
+        a.href = imageBuffer.toDataURL('image/png');
+        a.download = `pixel-img-${dimension}x${dimension}.png`;
+        a.click();
+        document.body.removeChild(a);
+    }
+
 }
 
 function copyImageToCanvas() {
@@ -384,8 +402,4 @@ function clearBuffer() {
     const ctx = imageBuffer.getContext('2d');
     const dimension = parseInt(dimensionSelect.value);
     ctx.clearRect(0, 0, dimension, dimension);
-}
-
-function saveFile() {
-    copyCanvasToBuffer();
 }
