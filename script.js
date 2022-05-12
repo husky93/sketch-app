@@ -228,6 +228,7 @@ function deleteCanvas() {
 
 function rgbToHex(col)
 {
+    const args = [...arguments];
     if(col.charAt(3)=='(')
     {
         col=col.replace('rgb(','').replace(')','').split(',');
@@ -253,9 +254,8 @@ function rgbToHex(col)
       }
       // multiply before convert to HEX
       a = ((a * 255) | 1 << 8).toString(16).slice(1)
-      hex = hex + a;
-    
-      return '#' + hex;
+      if(args[1]) return '#' + hex;
+      else return '#' + hex + a;
     }
 }
 
@@ -284,7 +284,7 @@ function hexToRGB(hex, alpha) {
 
 function getTileColor(e) {
     const tiles = document.querySelectorAll('.tile');
-    penColorPicker.value = rgbToHex(e.target.style.backgroundColor);
+    penColorPicker.value = rgbToHex(e.target.style.backgroundColor, true);
     penColor = rgbToHex(e.target.style.backgroundColor);
     penOpacity = getAlphaRGBA(e.target.style.backgroundColor);
     changeOpacity(penOpacity);
