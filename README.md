@@ -10,6 +10,8 @@ Web app in which you can create pixelated art.
 - Eraser
 - Clear canvas button
 - Toggle pixel grid
+- Load .png file (Only 16x16, 24x24, 32x32, 48x48, 64x64px dimensions)
+- Save file as .png 
 
 
 Live: [click here](https://husky93.github.io/sketch-app/)
