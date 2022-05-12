@@ -22,7 +22,6 @@ let penColor = penColorPicker.value;
 let bgColor = bgColorPicker.value;
 let eraserColor = bgColorPicker.value;
 let penOpacity = opacityInput.value;
-let reader = null;
 
 canvas.addEventListener('mousedown', e => {
     e.preventDefault(); //prevent dragging
@@ -306,10 +305,11 @@ function getRandomColor() {
 }
 
 function loadFile() {
-    reader = new FileReader();
+    const reader = new FileReader();
     const selectedFile = loadFileInput.files[0];
     fileWarningText.textContent = '';
-    if(selectedFile) {
+    const allowedFileTypes = /(\.png)$/i;
+    if(allowedFileTypes.exec(selectedFile.name)) {
         reader.addEventListener('load', (e) => {
             let img = new Image();
             img.src = e.target.result;
@@ -333,6 +333,8 @@ function loadFile() {
             }
         });
         reader.readAsDataURL(selectedFile);
+    } else {
+        fileWarningText.textContent = 'Wrong file type! Only .png supported.';
     }
 }
 
