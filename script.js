@@ -362,6 +362,12 @@ function copyImageToCanvas() {
     });
 }
 
+function clearBuffer() {
+    const ctx = imageBuffer.getContext('2d');
+    const dimension = parseInt(dimensionSelect.value);
+    ctx.clearRect(0, 0, dimension, dimension);
+}
+
 function saveFile() {
-    
+    copyCanvasToBuffer();
 }
