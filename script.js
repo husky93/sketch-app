@@ -26,11 +26,11 @@ let bgColor = 'rgba(0,0,0,0)';
 let eraserColor = bgColorPicker.value;
 let penOpacity = opacityInput.value;
 
-canvas.addEventListener('mousedown', e => {
+document.addEventListener('mousedown', e => {
     e.preventDefault(); //prevent dragging
     if(e.button === 0) enableMouseDown();
 });
-canvas.addEventListener('mouseup', disableMouseDown);
+document.addEventListener('mouseup', disableMouseDown);
 dimensionSelect.addEventListener('change', changeCanvasSize);
 toggleGridButton.addEventListener('click', toggleGrid);
 toggleEraserButton.addEventListener('click', toggleEraser);
