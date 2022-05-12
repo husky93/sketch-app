@@ -1,3 +1,5 @@
+/* Coded by Maciej Sroka 12.05.2022*/
+
 const canvas = document.querySelector('.canvas');
 const dimensionSelect = document.querySelector('select');
 const opacityInput = document.querySelector('.opacity');
