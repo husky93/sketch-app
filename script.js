@@ -362,33 +362,29 @@ function saveFile() {
 
 function copyImageToCanvas() {
     const tiles = document.querySelectorAll('.tile');
+    const tilesArray = Array.from(tiles); // Nodelist --> Array conversion so we can iterate through it
     const ctx = imageBuffer.getContext('2d');
     const dimension = dimensionSelect.value;
-    let data = [];
     let counter = 0;
+    
     for(let i = 0; i < dimension; i++) {
         for(let j = 0; j < dimension; j++) {
             const pixel = ctx.getImageData(j, i, 1 ,1);
-            data[counter] = pixel.data;
+            const data = pixel.data;
+            const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;  
+            tilesArray[counter].style.cssText = `background-color: ${rgba};`;
+            if(data[3] > 0) {
+                tilesArray[counter].classList.add('inked')
+            }
             counter++;
         }
     }
-    let i = 0;
-    tiles.forEach(tile => {
-        const rgba = `rgba(${data[i][0]}, ${data[i][1]}, ${data[i][2]}, ${data[i][3] / 255})`;  
-        const color = rgbToHex(rgba);
-        tile.style.cssText = `background-color: ${color};`;
-        if(data[i][3] > 0) {
-            tile.classList.add('inked')
-        }
-        i++;
-    });
 }
 
 function copyCanvasToBuffer() {
     clearBuffer();
     const tiles = document.querySelectorAll('.tile'); 
-    const tilesArray = Array.from(tiles); // Nodelist --> Array conversion so we can iterate through it
+    const tilesArray = Array.from(tiles);
     const ctx = imageBuffer.getContext('2d');
     const dimension = parseInt(dimensionSelect.value);
     let counter = 0;
