@@ -13,7 +13,7 @@ const bgColorPicker = document.querySelector('.bgcolor');
 const warningText = document.querySelector('.btnwarning');
 const fileWarningText = document.querySelector('.filewarning');
 const opacityValue = document.querySelector('.opacity-value');
-const imageBuffer = document.querySelector('canvas');
+const imageBuffer = document.querySelector('.image-buffer');
 
 let isMouseDown = false;
 let eraserMode = false;
@@ -360,6 +360,24 @@ function copyImageToCanvas() {
         }
         i++;
     });
+}
+
+function copyCanvasToBuffer() {
+    clearBuffer();
+    const tiles = document.querySelectorAll('.tile'); 
+    const tilesArray = Array.from(tiles); // Nodelist --> Array conversion so we can iterate through it
+    const ctx = imageBuffer.getContext('2d');
+    const dimension = parseInt(dimensionSelect.value);
+    let counter = 0;
+
+    for(let i = 0; i < dimension; i++) {
+        for(let j = 0; j < dimension; j++) {
+            const color = tilesArray[counter].style.backgroundColor;
+            ctx.fillStyle = color;
+            ctx.fillRect(j, i, 1, 1);
+            counter++;
+        }
+    }
 }
 
 function clearBuffer() {
