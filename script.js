@@ -1,4 +1,5 @@
 /* Coded by Maciej Sroka 12.05.2022*/
+/* https://github.com/husky93 */
 
 const canvas = document.querySelector('.canvas');
 const dimensionSelect = document.querySelector('select');
