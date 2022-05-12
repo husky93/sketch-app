@@ -22,7 +22,7 @@ let isMouseDown = false;
 let eraserMode = false;
 let rainbowMode = false;
 let penColor = penColorPicker.value;
-let bgColor = bgColorPicker.value;
+let bgColor = 'rgba(0,0,0,0)';
 let eraserColor = bgColorPicker.value;
 let penOpacity = opacityInput.value;
 
