@@ -26,8 +26,8 @@ let bgColor = 'rgba(0,0,0,0)';
 let eraserColor = bgColorPicker.value;
 let penOpacity = opacityInput.value;
 
-document.addEventListener('mousedown', e => {
-    e.preventDefault(); //prevent dragging
+canvas.addEventListener('mousedown', e => { //prevent dragging
+    e.preventDefault();
     if(e.button === 0) enableMouseDown();
 });
 document.addEventListener('mouseup', disableMouseDown);
