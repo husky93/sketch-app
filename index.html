@@ -20,23 +20,23 @@
             <div class="column left-column">
                 <div class="column container">
                     <div class="colorpicker-wrapper">         
-                        <input type="color" name="pen" class="colorpicker pencolor" value="#000000">
+                        <input type="color" name="pen" id="pen" class="colorpicker pencolor" value="#000000">
                         <label for="pen">Brush color</label>
                     </div>
                     <div class="wrapper">
                         <label for="pen-opacity" class="label-small">Color brightness</label>
-                        <input type="range" min="0" max="1" step="0.01" value="1" name="pen-opacity" class="opacity">
+                        <input type="range" min="0" max="1" step="0.01" value="1" name="pen-opacity" id="pen-opacity" class="opacity">
                         <span class="opacity-value"></span>
                     </div>
                     <div class="colorpicker-wrapper">
-                        <input type="color" name="pen" class="colorpicker bgcolor" value="#ffffff">
-                        <label for="pen">Background color</label>
+                        <input type="color" name="bgcolor" id="bgcolor" class="colorpicker bgcolor" value="#ffffff">
+                        <label for="bgcolor">Background color</label>
                     </div>
                     <button class="btn btn-color">Grab color</button>
                     <button class="btn btn-eraser">Toggle eraser</button>
                     <button class="btn btn-rainbow">Toggle rainbow mode</button>
                     <label for="dimensions">Choose canvas dimension:</label>
-                    <select name="dimensions">
+                    <select name="dimensions" id="dimensions">
                         <option value="16" selected="selected">16x16</option>
                         <option value="24">24x24</option>
                         <option value="32">32x32</option>
