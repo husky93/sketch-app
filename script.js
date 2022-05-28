@@ -106,6 +106,7 @@ function toggleEraser() {
     }
     if(!grabColorButton.classList.contains('active')) {
         toggleEraserButton.classList.toggle('active');
+        console.log(eraserColor);
         temp = eraserColor;
         eraserColor = penColor;
         penColor = temp;
@@ -134,7 +135,7 @@ function toggleRainbow() {
 
 function changeColorMO(e) {
     if(isMouseDown && !rainbowMode) {
-        let color = hexToRGB(penColor, penOpacity);
+        let color = eraserMode ? hexToRGB(penColor) : hexToRGB(penColor, penOpacity);
         e.target.style.cssText = `background-color: ${color};`
         eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
     } else if (isMouseDown && rainbowMode) {
@@ -147,7 +148,7 @@ function changeColorMO(e) {
 
 function changeColorClick(e) {
     if(!rainbowMode) {
-        let color = hexToRGB(penColor, penOpacity);
+        let color = eraserMode ? hexToRGB(penColor) : hexToRGB(penColor, penOpacity);
         e.target.style.cssText = `background-color: ${color};`
         eraserMode ? e.target.classList.remove('inked') : e.target.classList.add('inked');
     } else if (rainbowMode) {
