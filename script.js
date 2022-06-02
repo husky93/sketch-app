@@ -17,6 +17,7 @@ const warningText = document.querySelector('.btnwarning');
 const fileWarningText = document.querySelector('.filewarning');
 const opacityValue = document.querySelector('.opacity-value');
 const imageBuffer = document.querySelector('.image-buffer');
+const themeSlider = document.querySelector('.slider-input');
 
 let isMouseDown = false;
 let eraserMode = false;
@@ -42,6 +43,7 @@ bgColorPicker.addEventListener('change', changeBackgroundColor);
 loadFileInput.addEventListener('change', loadFile);
 saveFileButton.addEventListener('click', saveFile);
 opacityInput.addEventListener('change', e => changeOpacity(e.target.value));
+themeSlider.addEventListener('change', changeTheme);
 
 opacityValue.textContent = opacityInput.value;
 
@@ -404,4 +406,10 @@ function clearBuffer() {
     const ctx = imageBuffer.getContext('2d');
     const dimension = parseInt(dimensionSelect.value);
     ctx.clearRect(0, 0, dimension, dimension);
+}
+
+function changeTheme() {
+    const root = document.documentElement;
+    const newTheme = root.className === 'dark' ? 'light' : 'dark';
+    root.className = newTheme;
 }

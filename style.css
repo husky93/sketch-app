@@ -1,3 +1,13 @@
+:root.light {
+    --bg-color: #F5F5F5;
+    --font-color: #474747
+}
+
+:root.dark {
+    --bg-color: #474747;
+    --font-color: #F5F5F5
+}
+
 * {
     box-sizing: border-box;
 }
@@ -6,8 +16,8 @@ body {
     margin: 0;
     font-family: 'Raleway', sans-serif;
     font-size: 15px;
-    background-color: #F5F5F5;
-    color: #474747;
+    background-color: var(--bg-color);
+    color: var(--font-color);
 }
 
 h1 {
@@ -93,8 +103,8 @@ h1 {
     font-weight: 500;
     font-size: 13px;
     border: 2px solid #597DB5;
-    color: #474747;
-    background-color: #FDFDFD;
+    color: var(--font-color);
+    background-color: var(--bg-color);
     min-width: 186px;
 }
 
@@ -133,7 +143,7 @@ h1 {
     border: none;
     padding: 0;
     cursor: pointer;
-    background-color: #F5F5F5;
+    background-color: var(--bg-color);
 }
 
 .colorpicker::-webkit-color-swatch {
