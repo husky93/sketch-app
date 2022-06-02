@@ -238,4 +238,23 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
-  
+
+.icon {
+    width: 1rem;
+    height: 1rem;
+    background-size: cover;
+}
+
+.sun {
+    background-image: url(./assets/sun.svg);
+}
+
+.moon {
+    background-image: url(./assets/moon.svg);
+}
+
+.theme-toggler {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
