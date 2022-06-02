@@ -1,11 +1,19 @@
 :root.light {
     --bg-color: #F5F5F5;
-    --font-color: #474747
+    --font-color: #474747;
+    --primary-color:#597DB5;
+    --primary-hover: #4C6B9C;
+    --primary-active: #395075;
+    --click-btn-color: #F5F5F5;
 }
 
 :root.dark {
     --bg-color: #474747;
-    --font-color: #F5F5F5
+    --font-color: #F5F5F5;
+    --primary-color: #96BFFF;
+    --primary-hover: #87ABE6;
+    --primary-active: #718FBF;
+    --click-btn-color: #474747;
 }
 
 * {
@@ -37,7 +45,7 @@ h1 {
     flex-direction: column;
     flex-wrap: wrap;
     background-color: #fff;
-    border: 8px solid #597DB5;
+    border: 8px solid var(--primary-color);
 }
 
 .colorpicker-wrapper, .wrapper {
@@ -89,7 +97,7 @@ h1 {
     padding: 48px;
     font-family: 'VT323', monospace;
     font-size: 36px;
-    color: #597DB5;
+    color: var(--primary-color);
 }
 
 .btn {
@@ -102,30 +110,31 @@ h1 {
     font-family: 'Raleway', sans-serif;
     font-weight: 500;
     font-size: 13px;
-    border: 2px solid #597DB5;
+    border: 2px solid var(--primary-color);
     color: var(--font-color);
     background-color: var(--bg-color);
     min-width: 186px;
 }
 
 .click {
-    background-color: #597DB5;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--click-btn-color);
 }
 
 .click:hover {
-    background-color: #4C6B9C;
-    color: #fff;
+    background-color: var(--primary-hover);
+    color: var(--click-btn-color);
 }
 
 .click:active {
-    background-color: #395075;
-    border: 2px solid #395075;
+    background-color: var(--primary-active);
+    border: 2px solid var(--primary-active);
+    color: var(--click-btn-color);
 }
 
 .active {
-    background-color: #597DB5;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--click-btn-color);
 }
 
 .warning {
@@ -149,7 +158,7 @@ h1 {
 .colorpicker::-webkit-color-swatch {
     border-radius: 8px;
     border: none;
-    border: 2px solid #4C6B9C;
+    border: 2px solid var(--primary-hover);
     height: 100%;
     width: 100%;
     padding: 0;
@@ -158,7 +167,7 @@ h1 {
 .colorpicker::-moz-color-swatch {
     border-radius: 8px;
     border: none;
-    border: 2px solid #4C6B9C;
+    border: 2px solid var(--primary-hover);
     height: 100%;
     width: 100%;
     padding: 0;
@@ -170,7 +179,7 @@ h1 {
     margin: 0 auto;
     padding: 64px;
     gap: 8px;
-    color: #4C6B9C;
+    color: var(--primary-color);
     font-size: 16px;
 }
 
@@ -249,21 +258,8 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
-.icon {
-    width: 1rem;
-    height: 1rem;
-    background-size: cover;
-}
-
-.sun {
-    background-image: url(./assets/sun.svg);
-}
-
-.moon {
-    background-image: url(./assets/moon.svg);
-}
-
 .theme-toggler {
+    color: var(--font-color);
     display: flex;
     align-items: center;
     gap: 4px;

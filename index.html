@@ -5,13 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,200,0,0" />
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&family=VT323&display=swap" rel="stylesheet">
     <title>Pixel Sketch</title>
 </head>
-<body>
+<body class="light">
     <section class="main column">
         <header class="head">
             <h1>Pixel Sketch</h1>
@@ -56,18 +57,22 @@
                 <div class="column container">
                     <strong>Supporting only .png files</strong>
                     <span>(Only 16x16, 24x24, 32x32, 48x48, 64x64 px)</span>
-                    <label for="file-upload" class="btn click btn-upload">Upload file</label>
+                    <label for="file-upload" class="btn click btn-upload">Load file</label>
                     <input id="file-upload" type="file" class="btn btn-load" accept="image/png">
                     <span class="filewarning warning"></span>
                     <button class="btn btn-save click">Save file</button>
                     <span>Website theme:</span>
                     <div class="theme-toggler">
-                        <i class="icon sun"></i>
+                        <span class="material-symbols-outlined">
+                            light_mode
+                        </span>
                         <label class="switch" for="checkbox">
                             <input type="checkbox" id="checkbox" class="slider-input"/>
                             <div class="slider round"></div>
                         </label>
-                        <i class="icon moon"></i>
+                        <span class="material-symbols-outlined">
+                            dark_mode
+                        </span>
                     </div>
                     <canvas height="16" width="16" class="image-buffer"></canvas>
                 </div>

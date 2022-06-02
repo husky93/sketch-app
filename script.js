@@ -1,6 +1,7 @@
 /* Coded by Maciej Sroka 12.05.2022*/
 /* https://github.com/husky93 */
 
+const root = document.documentElement;
 const canvas = document.querySelector('.canvas');
 const dimensionSelect = document.querySelector('select');
 const opacityInput = document.querySelector('.opacity');
@@ -45,6 +46,7 @@ saveFileButton.addEventListener('click', saveFile);
 opacityInput.addEventListener('change', e => changeOpacity(e.target.value));
 themeSlider.addEventListener('change', changeTheme);
 
+root.className = 'light';
 opacityValue.textContent = opacityInput.value;
 
 createCanvas(16);
@@ -409,7 +411,6 @@ function clearBuffer() {
 }
 
 function changeTheme() {
-    const root = document.documentElement;
     const newTheme = root.className === 'dark' ? 'light' : 'dark';
     root.className = newTheme;
 }
