@@ -3,6 +3,7 @@ Web application in which you can create pixelated art. Perfect for creating your
 Written in vanilla JavaScript.
 
 #### Features:
+- Website theme changer
 - Change brush color
 - Switch canvas pixel dimension
 - Change background color
