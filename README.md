@@ -16,6 +16,6 @@ Written in vanilla JavaScript.
 - Save file as .png 
 
 
-Live: [click here](https://husky93.github.io/sketch-app/)
+### Live: [click here](https://husky93.github.io/sketch-app/)
 
 ![Webpage photo](https://github.com/husky93/sketch-app/blob/main/assets/charizard.png?raw=true)
